@@ -5,6 +5,9 @@ import seaborn as sns
 import openai
 from datetime import datetime
 
+# Set page configuration (must be the first Streamlit command)
+st.set_page_config(page_title="Excel Data Chat", layout="wide")
+
 # Access OpenAI API key securely from Streamlit secrets, with fallback for local testing
 try:
     openai_api_key = st.secrets.get("openai.api_key")
@@ -15,9 +18,6 @@ try:
 except (KeyError, AttributeError, FileNotFoundError) as e:
     st.error(f"OpenAI configuration error: {str(e)}. Please configure 'openai.api_key' in Streamlit Cloud under 'Manage app' > 'Secrets' or use a local secrets.toml file.")
     st.stop()
-
-# Set page configuration
-st.set_page_config(page_title="Excel Data Chat", layout="wide")
 
 # Custom CSS for chat styling
 st.markdown("""
@@ -151,7 +151,7 @@ def process_conversation(conversation_text, context=None, data=None):
         return analysis
     except Exception as e:
         st.error(f"Error in process_conversation: {str(e)}")
-        return {"response": "Sorry, I encountered an error processing your request.", "graphs": [], "insights": []}
+        return {"response": "Sorry, I encountered an issue processing your request.", "graphs": [], "insights": []}
 
 def main():
     st.title("Excel Data Chat")
